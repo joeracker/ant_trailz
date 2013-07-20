@@ -68,19 +68,19 @@
 
 	  function initialize() {
 	    directionsDisplay = new google.maps.DirectionsRenderer();
-	    var Austin = new google.maps.LatLng(30.2669, -97.7428);
+	    var austin = new google.maps.LatLng(30.2669, -97.7428);
 	    var mapOptions = {
-	      zoom:11,
+	      zoom:7,
 	      mapTypeId: google.maps.MapTypeId.ROADMAP,
-	      center: Austin
+	      center: austin
 	    }
 	    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 	    directionsDisplay.setMap(map);
 	  }
 
-	  function calcRoute() {
+	  function calcRoute(end) {
 	    var start = document.getElementById("start").value;
-	    var end = document.getElementById("end").value;
+	    	    
 	    var request = {
 	      origin:start,
 	      destination:end,
@@ -128,29 +128,35 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Home</li>
-              <li><p>901 Newman Dr.<br />Austin, TX 78703</p></li>
               <li class="nav-header">Prototype</li>
-			  <li>
-			  <strong>Home: </strong><br />
-			  <input id="start" onchange="calcRoute();" value="901 Newman Dr Austin TX 78703"  style="width:100px;" /></li>
-			  <li>
-			  <strong>End: </strong><br />
-			  <select id="end" onchange="calcRoute();" style="width:100px;">
+			  <div>
+			  <label>Home: </label><input id="start" onchange="calcRoute();" value=""/>
+			  <br /><br />
+			  <label>Location 1: </label><select id="loc1" onchange="calcRoute(getElementById('loc1').value);">
 			    <option value="chicago, il">Chicago</option>
 			    <option value="st louis, mo">St Louis</option>
 			    <option value="joplin, mo">Joplin, MO</option>
 			    <option value="oklahoma city, ok">Oklahoma City</option>
 			    <option value="amarillo, tx">Amarillo</option>
 			    <option value="gallup, nm">Gallup, NM</option>
-			    <option value="flagstaff, az">Flagstaff, AZ</option>
-			    <option value="winona, az">Winona</option>
-			    <option value="kingman, az">Kingman</option>
-			    <option value="barstow, ca">Barstow</option>
-			    <option value="san bernardino, ca">San Bernardino</option>
-			    <option value="los angeles, ca">Los Angeles</option>
-			  </select></li>
-			  
+			  </select>
+		  	  <label>Location 2: </label><select id="loc2" onchange="calcRoute(getElementById('loc2').value);">
+			    <option value="chicago, il">Chicago</option>
+			    <option value="st louis, mo">St Louis</option>
+			    <option value="joplin, mo">Joplin, MO</option>
+			    <option value="oklahoma city, ok">Oklahoma City</option>
+			    <option value="amarillo, tx">Amarillo</option>
+			    <option value="gallup, nm">Gallup, NM</option>
+			  </select>
+			  <label>Location 3: </label><select id="loc3" onchange="calcRoute(getElementById('loc3').value);">
+			    <option value="chicago, il">Chicago</option>
+			    <option value="st louis, mo">St Louis</option>
+			    <option value="joplin, mo">Joplin, MO</option>
+			    <option value="oklahoma city, ok">Oklahoma City</option>
+			    <option value="amarillo, tx">Amarillo</option>
+			    <option value="gallup, nm">Gallup, NM</option>
+			  </select>
+
 			  </div>
 			  
             </ul>
@@ -158,8 +164,6 @@
         </div><!--/span-->
         <div class="span9">
           <div>
-            <h1>Hello, world!</h1>
-            <p>Map goes here.</p>
 		    <div id="map-canvas">
             <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
           </div>
