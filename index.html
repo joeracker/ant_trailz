@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap, from Twitter</title>
+    <title>Compare my computes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -64,10 +64,16 @@
     
 	  var directionsDisplay;
 	  var directionsService = new google.maps.DirectionsService();
+	  var directionsService2 = new google.maps.DirectionsService();
+	  var directionsService3 = new google.maps.DirectionsService();
+	  var directionsService4 = new google.maps.DirectionsService();
 	  var map;
+	  var route1 = new route();
+	  var route2 = new route();
+	  var route3 = new route();
+	  var route4 = new route();
 
 	  function initialize() {
-	    directionsDisplay = new google.maps.DirectionsRenderer();
 	    var austin = new google.maps.LatLng(30.2669, -97.7428);
 	    var mapOptions = {
 	      zoom:7,
@@ -75,12 +81,41 @@
 	      center: austin
 	    }
 	    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+	    directionsDisplay = new google.maps.DirectionsRenderer();
+		directionsDisplay2 = new google.maps.DirectionsRenderer();
+		directionsDisplay3 = new google.maps.DirectionsRenderer();
+		directionsDisplay4 = new google.maps.DirectionsRenderer();
 	    directionsDisplay.setMap(map);
+		directionsDisplay2.setMap(map);
+		directionsDisplay3.setMap(map);
+
+	  }
+
+	  function route() {
+		this.directionsService = new google.maps.DirectionsService();
+	    this.directionsDisplay = new google.maps.DirectionsRenderer();
+		this.directionsDisplay.setMap(map);
+
+		this.calcRoute = calcRoute;
+		  function calcRoute(end) {
+		    var start = document.getElementById("start").value;
+		    var request = {
+		      origin:start,
+		      destination:end,
+		      travelMode: google.maps.TravelMode.DRIVING
+		    };
+		    this.directionsService.route(request, function(result, status) {
+		      if (status == google.maps.DirectionsStatus.OK) {
+		        this.directionsDisplay.setDirections(result);
+		      }
+		    });
+		  }	  	
+		
 	  }
 
 	  function calcRoute(end) {
 	    var start = document.getElementById("start").value;
-	    	    
 	    var request = {
 	      origin:start,
 	      destination:end,
@@ -92,6 +127,46 @@
 	      }
 	    });
 	  }
+	  function calcRoute2(end) {
+	    var start = document.getElementById("start").value;
+	    var request = {
+	      origin:start,
+	      destination:end,
+	      travelMode: google.maps.TravelMode.DRIVING
+	    };
+	    directionsService2.route(request, function(result, status) {
+	      if (status == google.maps.DirectionsStatus.OK) {
+	        directionsDisplay2.setDirections(result);
+	      }
+	    });
+	  }
+	  function calcRoute3(end) {
+	    var start = document.getElementById("start").value;
+	    var request = {
+	      origin:start,
+	      destination:end,
+	      travelMode: google.maps.TravelMode.DRIVING
+	    };
+	    directionsService3.route(request, function(result, status) {
+	      if (status == google.maps.DirectionsStatus.OK) {
+	        directionsDisplay3.setDirections(result);
+	      }
+	    });
+	  }
+	  function calcRoute4(end) {
+	    var start = document.getElementById("start").value;
+	    var request = {
+	      origin:start,
+	      destination:end,
+	      travelMode: google.maps.TravelMode.DRIVING
+	    };
+	    directionsService3.route(request, function(result, status) {
+	      if (status == google.maps.DirectionsStatus.OK) {
+	        directionsDisplay4.setDirections(result);
+	      }
+	    });
+	  }
+
 	
 	</script>
 	
@@ -109,7 +184,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Map my commute</a>
+          <a class="brand" href="#">Compare my commutes</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
               Hosted at <a href="http://www.rackspace.com" class="navbar-link">Rackspace</a>
@@ -132,29 +207,29 @@
 			  <div>
 			  <label>Home: </label><input id="start" onchange="calcRoute();" value=""/>
 			  <br /><br />
-			  <label>Location 1: </label><select id="loc1" onchange="calcRoute(getElementById('loc1').value);">
-			    <option value="chicago, il">Chicago</option>
-			    <option value="st louis, mo">St Louis</option>
-			    <option value="joplin, mo">Joplin, MO</option>
-			    <option value="oklahoma city, ok">Oklahoma City</option>
-			    <option value="amarillo, tx">Amarillo</option>
-			    <option value="gallup, nm">Gallup, NM</option>
+			  <label>Location 1: </label><select id="loc1" onchange="route1.calcRoute(getElementById('loc1').value);">
+			    <option value="7700 Parmer Lane, Austin, TX">Parmer Lane</option>
+			    <option value="2300 Greenlawn Boulevard Round Rock, TX 78664">Dell Plant</option>
+			    <option value="6001 Airport Blvd, Austin, TX">Highland Mall</option>
+			    <option value="8081-8099 N Interstate 35 Frontage Rd Austin TX 78753">RAX Today</option>
 			  </select>
-		  	  <label>Location 2: </label><select id="loc2" onchange="calcRoute(getElementById('loc2').value);">
-			    <option value="chicago, il">Chicago</option>
-			    <option value="st louis, mo">St Louis</option>
-			    <option value="joplin, mo">Joplin, MO</option>
-			    <option value="oklahoma city, ok">Oklahoma City</option>
-			    <option value="amarillo, tx">Amarillo</option>
-			    <option value="gallup, nm">Gallup, NM</option>
+		  	  <label>Location 2: </label><select id="loc2" onchange="route2.calcRoute(getElementById('loc2').value);">
+  			    <option value="7700 Parmer Lane, Austin, TX">Parmer Lane</option>
+  			    <option value="2300 Greenlawn Boulevard Round Rock, TX 78664">Dell Plant</option>
+  			    <option value="6001 Airport Blvd, Austin, TX">Highland Mall</option>
+  			    <option value="8081-8099 N Interstate 35 Frontage Rd Austin TX 78753">RAX Today</option>
 			  </select>
-			  <label>Location 3: </label><select id="loc3" onchange="calcRoute(getElementById('loc3').value);">
-			    <option value="chicago, il">Chicago</option>
-			    <option value="st louis, mo">St Louis</option>
-			    <option value="joplin, mo">Joplin, MO</option>
-			    <option value="oklahoma city, ok">Oklahoma City</option>
-			    <option value="amarillo, tx">Amarillo</option>
-			    <option value="gallup, nm">Gallup, NM</option>
+			  <label>Location 3: </label><select id="loc3" onchange="route3.calcRoute(getElementById('loc3').value);">
+  			    <option value="7700 Parmer Lane, Austin, TX">Parmer Lane</option>
+  			    <option value="2300 Greenlawn Boulevard Round Rock, TX 78664">Dell Plant</option>
+  			    <option value="6001 Airport Blvd, Austin, TX">Highland Mall</option>
+  			    <option value="8081-8099 N Interstate 35 Frontage Rd Austin TX 78753">RAX Today</option>
+			  </select>
+			  <label>Location 4: </label><select id="loc4" onchange="route4.calcRoute(getElementById('loc4').value);">
+  			    <option value="7700 Parmer Lane, Austin, TX">Parmer Lane</option>
+  			    <option value="2300 Greenlawn Boulevard Round Rock, TX 78664">Dell Plant</option>
+  			    <option value="6001 Airport Blvd, Austin, TX">Highland Mall</option>
+  			    <option value="8081-8099 N Interstate 35 Frontage Rd Austin TX 78753">RAX Today</option>
 			  </select>
 
 			  </div>
@@ -181,7 +256,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="static/bootstrap/js/jquery.js"></script>
+	<script src="http://code.jquery.com/jquery.js"></script>
     <script src="static/bootstrap/js/bootstrap-transition.js"></script>
     <script src="static/bootstrap/js/bootstrap-alert.js"></script>
     <script src="static/bootstrap/js/bootstrap-modal.js"></script>
@@ -194,7 +269,7 @@
     <script src="static/bootstrap/js/bootstrap-collapse.js"></script>
     <script src="static/bootstrap/js/bootstrap-carousel.js"></script>
     <script src="static/bootstrap/js/bootstrap-typeahead.js"></script>
-	<script src="http://code.jquery.com/jquery.js"></script>
+
 
   </body>
 </html>
