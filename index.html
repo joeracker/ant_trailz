@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+      
+	  /* Map styles */
+      #map-canvas { width: 100%; height: 500px; }
+      
+	  
+    </style>
+    <link href="static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="static/bootstrap/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="static/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="static/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="static/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="static/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="static/bootstrap/ico/favicon.png">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAeyLRdwL9S24R6gtnt8WtPSf0w03N9tFM&sensor=true"></script>
+    <script type="text/javascript">
+      /* function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8,
+          //mapTypeId: google.maps.MapTypeId.TERRAIN
+          mapTypeId: google.maps.MapTypeId.SATELITE
+          //mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        //var map2 = new google.maps.Map(document.getElementById("map-canvas2"), mapOptions);
+      } */
+		  
+      google.maps.event.addDomListener(window, 'load', initialize);
+    
+	  var directionsDisplay;
+	  var directionsService = new google.maps.DirectionsService();
+	  var map;
+
+	  function initialize() {
+	    directionsDisplay = new google.maps.DirectionsRenderer();
+	    var Austin = new google.maps.LatLng(30.2669, -97.7428);
+	    var mapOptions = {
+	      zoom:11,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP,
+	      center: Austin
+	    }
+	    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	    directionsDisplay.setMap(map);
+	  }
+
+	  function calcRoute() {
+	    var start = document.getElementById("start").value;
+	    var end = document.getElementById("end").value;
+	    var request = {
+	      origin:start,
+	      destination:end,
+	      travelMode: google.maps.TravelMode.DRIVING
+	    };
+	    directionsService.route(request, function(result, status) {
+	      if (status == google.maps.DirectionsStatus.OK) {
+	        directionsDisplay.setDirections(result);
+	      }
+	    });
+	  }
+	
+	</script>
+	
+	
+	
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Map my commute</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              Hosted at <a href="http://www.rackspace.com" class="navbar-link">Rackspace</a>
+            </p>
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Home</li>
+              <li><p>901 Newman Dr.<br />Austin, TX 78703</p></li>
+              <li class="nav-header">Prototype</li>
+			  <li>
+			  <strong>Home: </strong><br />
+			  <input id="start" onchange="calcRoute();" value="901 Newman Dr Austin TX 78703"  style="width:100px;" /></li>
+			  <li>
+			  <strong>End: </strong><br />
+			  <select id="end" onchange="calcRoute();" style="width:100px;">
+			    <option value="chicago, il">Chicago</option>
+			    <option value="st louis, mo">St Louis</option>
+			    <option value="joplin, mo">Joplin, MO</option>
+			    <option value="oklahoma city, ok">Oklahoma City</option>
+			    <option value="amarillo, tx">Amarillo</option>
+			    <option value="gallup, nm">Gallup, NM</option>
+			    <option value="flagstaff, az">Flagstaff, AZ</option>
+			    <option value="winona, az">Winona</option>
+			    <option value="kingman, az">Kingman</option>
+			    <option value="barstow, ca">Barstow</option>
+			    <option value="san bernardino, ca">San Bernardino</option>
+			    <option value="los angeles, ca">Los Angeles</option>
+			  </select></li>
+			  
+			  </div>
+			  
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div>
+            <h1>Hello, world!</h1>
+            <p>Map goes here.</p>
+		    <div id="map-canvas">
+            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>Created by <a href="http://mejoe.com/">Joe</a>.</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="static/bootstrap/js/jquery.js"></script>
+    <script src="static/bootstrap/js/bootstrap-transition.js"></script>
+    <script src="static/bootstrap/js/bootstrap-alert.js"></script>
+    <script src="static/bootstrap/js/bootstrap-modal.js"></script>
+    <script src="static/bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="static/bootstrap/js/bootstrap-scrollspy.js"></script>
+    <script src="static/bootstrap/js/bootstrap-tab.js"></script>
+    <script src="static/bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="static/bootstrap/js/bootstrap-popover.js"></script>
+    <script src="static/bootstrap/js/bootstrap-button.js"></script>
+    <script src="static/bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="static/bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="static/bootstrap/js/bootstrap-typeahead.js"></script>
+	<script src="http://code.jquery.com/jquery.js"></script>
+
+  </body>
+</html>
